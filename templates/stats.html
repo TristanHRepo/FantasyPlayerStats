@@ -1,15 +1,87 @@
 {% extends "layout.html" %}
 {% block styling %}
-    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="../static/css/stats.css">
 {% endblock styling %}
 {% block banner %}Football Comparison Tool{% endblock banner %}
 {% block content %} 
 
 <div class="About">
     <div class="text">
-        THIS IS THE PLAYER PROFILE PAGE
+        <h1>THIS IS THE PLAYER PROFILE PAGE</h1>
     </div>
 </div>
 
+<div class="Players">
+    <h2>Player: {{player}}</h2>
+</div>
+
+<table>
+    <tbody>
+            <tr>
+                <th>Age:</th>
+                <td>{{data[0]}}</td>
+                <th>Height:</th>
+                <td>{{data[1]}}</td>
+                <th>Weight:</th>
+                <td>{{data[2]}}</td>
+            </tr>
+            <tr>
+                <th>College:</th>
+                <td>{{data[3]}}</td>
+                <th>Draft Pick:</th>
+                <td>{{data[4]}}</td>
+                <th>Year:</th>
+                <td>{{data[5]}}</td>
+            </tr>
+            <tr>
+                <th></th>
+                <td></td>
+                <th></th>
+                <td></td>
+                <th></th>
+                <td>Differential</td>
+            </tr>
+            <tr>
+                <td>Games Played</td>
+                <th>Player:</th>
+                <td>{{data[6]}}</td>
+                <th>Average:</th>
+                <td>{{data[7]}}</td>
+                <td>{{data[8]}}</td>
+            </tr>
+            <tr>
+                <td>Yards</td>
+                <th>Player:</th>
+                <td>{{data[9]}}</td>
+                <th>Average:</th>
+                <td>{{data[10]}}</td>
+                <td>{{data[11]}}</td>
+            </tr>
+            <tr>
+                <td>Catches</td>
+                <th>Player:</th>
+                <td>{{data[12]}}</td>
+                <th>Average:</th>
+                <td>{{data[13]}}</td>
+                <td>{{data[14]}}</td>
+            </tr>
+            <tr>
+                <td>Targets</td>
+                <th>Player:</th>
+                <td>{{data[15]}}</td>
+                <th>Average:</th>
+                <td>{{data[16]}}</td>
+                <td>{{data[17]}}</td>
+            </tr>
+            <tr>
+                <td>Touchdowns</td>
+                <th>Player:</th>
+                <td>{{data[18]}}</td>
+                <th>Average:</th>
+                <td>{{data[19]}}</td>
+                <td>{{data[20]}}</td>
+            </tr>
+    </tbody>
+</table>
 
 {% endblock content %}
