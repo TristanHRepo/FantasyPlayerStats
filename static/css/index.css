@@ -1,0 +1,34 @@
+.text {
+    text-align: center;
+}
+
+.About {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.Container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: center;
+}
+
+.Comparison {
+    border-style: solid;
+    border-width: 5px;
+    border-color: red;
+}
+
+.Profile {
+    border-style: solid;
+    border-width: 5px;
+    border-color: blue;
+}
+
+input {
+    width: 95%;
+}

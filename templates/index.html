@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block styling %}
+    <link rel="stylesheet" href="static/css/index.css">
+{% endblock styling %}
+{% block banner %}Football Comparison Tool{% endblock banner %}
+{% block content %} 
+
+<div class="About">
+    <div class="text">
+        <h2>Football Player Comparison Tool</h2>
+        <p>Enter a player name to view their player profile.</p>
+        <p>Enter another player name in the "compare with" field to compare the two players. More players can be added
+            by entering more players to compare with</p>
+    </div>
+</div>
+
+
+<div class="Container">
+    <div class="Comparison">
+         <form method="post" action="/player">
+            <label for="player1">Player:</label>
+            <input type="text" id="player1" name="player1" value="Player Name" required><br>
+
+            <br>
+
+            <label for="player2">Compare with:</label>
+            <input type="text" id="player2" name="player2" value="Player Name"><br>
+
+            <br>
+
+             <input type="submit" name="function" value="compare">
+        </form>
+    </div>
+
+    <div class="Profile">
+         <form method="post" action="/player">
+            <label for="player">Get Player Profile:</label>
+            <input type="text" id="player" name="player" value="Player Name"><br>
+
+            <br>
+
+             <input type="submit" name="function" value="profile">
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
