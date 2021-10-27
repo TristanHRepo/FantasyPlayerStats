@@ -8,7 +8,7 @@ def root():
     return render_template('index.html')
 
 
-@app.route('/player', methods=['POST'])
+@app.route('/tools', methods=['POST'])
 def playerStats():
     # POST to compare two or more players
     if request.form['function'] == 'compare':
