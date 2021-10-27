@@ -1,14 +1,92 @@
 {% extends "layout.html" %}
 {% block styling %}
-    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/comparison.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
 {% endblock styling %}
 {% block banner %}Football Comparison Tool{% endblock banner %}
 {% block content %} 
 
 <div class="About">
     <div class="text">
-        THIS IS THE COMPARISON PAGE
+        <h1> THIS IS THE COMPARISON PAGE </h1>
     </div>
 </div>
 
+<div class="Players">
+    <h2> Compare these players: </h2>
+    <h3>Player1: {{players[0]}}</h3>
+    <h3>Player2: {{players[1]}}</h3>
+</div>
+
+<div class="Metrics">
+    <button type="button">
+        Yds/gm
+    </button>
+
+    <button type="button">
+        TD/gm
+    </button>
+
+    <button type="button">
+        Tar/gm
+    </button>
+
+    <button type="button">
+        Catch/gm
+    </button>
+
+    <button type="button">
+        Snap%/gm
+    </button>
+
+    <button type="button">
+        Broken Tackles/gm
+    </button>
+
+    <button type="button">
+        Contested Catches/gm
+    </button>
+
+</div>
+
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+<script>
+var xValues = [1,2,3,4,5,6,7,8,9,1];
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      label: "Player 1",
+      data: [1, 2, 0, 1, 1, 0, 0, 3, 1, 1],
+      borderColor: "red",
+      fill: false
+    },{
+      label: "Player 2",
+      data: [0, 0, 1, 1, 2, 1, 2, 1, 0, 0],
+      borderColor: "blue",
+      fill: false
+    }]
+  },
+  options: {
+    legend: {display: true},
+    scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Touch Downs'
+          }
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Game'
+          }
+        }]
+  }
+
+  }
+});
+</script>
 {% endblock content %}
