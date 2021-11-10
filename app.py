@@ -31,6 +31,9 @@ def playerComparison():
 def playerStats():
     # POST to get a players stats and display them in their profile
     if request.form['function'] == 'Profile':
+
+        """ USE THIS TO GET DATA LATER: https://stackoverflow.com/questions/65323857/trying-to-scrape-data-from-pro-football-reference"""
+
         player = request.form['player']
         player = player.rsplit(" ")
         service_url = "http://35.209.40.140/v1/players/"
@@ -49,7 +52,14 @@ def playerStats():
             jon_data[item['name']] = item['value']
 
         print(jon_data)
-        return render_template('stats.html', data=jon_data)
+        if jon_data['position'] == 'QB':
+            return render_template('statsQB.html', data=jon_data)
+        elif jon_data['position'] == 'RB':
+            return render_template('statsRB.html', data=jon_data)
+        elif jon_data['position'] == 'WR':
+            return render_template('statsWR.html', data=jon_data)
+        elif jon_data['position'] == 'TE':
+            return render_template('statsTE.html', data=jon_data)
 
     return render_template('index.html')
 
