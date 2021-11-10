@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, request
+import requests
 import os
 
 app = Flask(__name__)
@@ -31,8 +32,24 @@ def playerStats():
     # POST to get a players stats and display them in their profile
     if request.form['function'] == 'Profile':
         player = request.form['player']
-        data = ["24", "6'11\"", "214 lbs", "LSU", "1st Round", "2", "5", "5", "0", "433", "488", "-55", "38", "41", "-3", "53", "48", "+5", "4", "3", "+1"]
-        return render_template('stats.html', player=player, data=data)
+        player = player.rsplit(" ")
+        service_url = "http://35.209.40.140/v1/players/"
+        service_url = service_url + player[0] + " " + player[1]
+        jon_data = requests.get(service_url)
+        jon_data = jon_data.json()
+
+        espn_url = "https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/"
+        espn_url = espn_url + jon_data['espn_id']
+        espn_data = requests.get(espn_url)
+        espn_data = espn_data.json()
+
+        jon_data['age'] = espn_data['athlete']['age']
+        jon_data['draft'] = espn_data['athlete']['displayDraft']
+        for item in espn_data['athlete']['statsSummary']['statistics']:
+            jon_data[item['name']] = item['value']
+
+        print(jon_data)
+        return render_template('stats.html', data=jon_data)
 
     return render_template('index.html')
 

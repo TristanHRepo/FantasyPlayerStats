@@ -11,27 +11,31 @@
     </div>
 </div>
 
+<div class="picture">
+    <img src={{data['headshot_url']}}>
+</div>
+
 <div class="Players">
-    <h2>Player: {{player}}</h2>
+    <h2>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h2>
 </div>
 
 <table>
     <tbody>
             <tr>
                 <th>Age:</th>
-                <td>{{data[0]}}</td>
+                <td>{{data['age']}}</td>
                 <th>Height:</th>
-                <td>{{data[1]}}</td>
+                <td>{{data['height']}}</td>
                 <th>Weight:</th>
-                <td>{{data[2]}}</td>
+                <td>{{data['weight']}}</td>
             </tr>
             <tr>
                 <th>College:</th>
-                <td>{{data[3]}}</td>
+                <td>{{data['college']}}</td>
                 <th>Draft Pick:</th>
-                <td>{{data[4]}}</td>
+                <td>{{data['draft']}}</td>
                 <th>Year:</th>
-                <td>{{data[5]}}</td>
+                <td>{{data['years_exp']}}</td>
             </tr>
             <tr>
                 <th></th>
