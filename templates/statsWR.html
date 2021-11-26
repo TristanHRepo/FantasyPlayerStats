@@ -13,16 +13,12 @@
 
 <div class="About">
     <div class="text">
-        <h1>THIS IS THE PLAYER PROFILE PAGE</h1>
+        <h1>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h1>
     </div>
 </div>
 
 <div class="picture">
     <img src={{data['headshot_url']}}>
-</div>
-
-<div class="Players">
-    <h2>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h2>
 </div>
 
 <table>
@@ -47,7 +43,7 @@
             <tr>
                 <td>Receptions</td>
                 <th>Player:</th>
-                <td>{{data['receptions']}}</td>
+                <td>{{data['gameStats']['totals'][0]}}</td>
                 <th>Average:</th>
                 <td>{{data[10]}}</td>
                 <td>{{data[11]}}</td>
@@ -55,7 +51,7 @@
             <tr>
                 <td>Receiving Yards</td>
                 <th>Player:</th>
-                <td>{{data['receivingYards']}}</td>
+                <td>{{data['gameStats']['totals'][2]}}</td>
                 <th>Average:</th>
                 <td>{{data[13]}}</td>
                 <td>{{data[14]}}</td>
@@ -63,7 +59,7 @@
             <tr>
                 <td>Receiving Touchdowns</td>
                 <th>Player:</th>
-                <td>{{data['receivingTouchdowns']}}</td>
+                <td>{{data['gameStats']['totals'][4]}}</td>
                 <th>Average:</th>
                 <td>{{data[16]}}</td>
                 <td>{{data[17]}}</td>
@@ -71,7 +67,7 @@
             <tr>
                 <td>Yds/reception</td>
                 <th>Player:</th>
-                <td>{{data['yardsPerReception']}}</td>
+                <td>{{data['gameStats']['totals'][3]}}</td>
                 <th>Average:</th>
                 <td>{{data[19]}}</td>
                 <td>{{data[20]}}</td>

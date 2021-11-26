@@ -4,6 +4,63 @@ import os
 
 app = Flask(__name__)
 
+
+def format_data(data):
+    """Formats all the stats into a format usable for the html/css code"""
+
+    stats = {}
+
+    for stat in range(len(data['names'])):
+        compiled_data = []
+        if data['names'][stat] == 'fumblesForced' or data['names'][stat] == 'kicksBlocked':
+            continue
+        for game in data['seasonTypes'][0]['categories'][0]['events']:
+            compiled_data.append(float(game['stats'][stat]))
+
+        stats[data['names'][stat]] = compiled_data
+    stats['totals'] = data['seasonTypes'][0]['summary']['stats'][0]['stats']
+    return stats
+
+
+def get_player_data(player):
+    """ """
+
+    # Create url for Jon's Service
+    service_url = "http://35.209.40.140/v1/players/"
+    service_url = service_url + player[0] + " " + player[1]
+    jon_data = requests.get(service_url)
+    jon_data = jon_data.json()
+
+    # Get extra data based on data from Jon's service
+    espn_url = "https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/"
+    espn_url = espn_url + jon_data['espn_id']
+    espn_data = requests.get(espn_url)
+    espn_data = espn_data.json()
+
+    # Player per game stats and totals
+    espn_url = espn_url + "/gamelog"
+    pgStats = requests.get(espn_url)
+    pgStats = pgStats.json()
+    stats = format_data(pgStats)
+
+    # Add data to the data already available
+    jon_data['age'] = espn_data['athlete']['age']
+    jon_data['draft'] = espn_data['athlete']['displayDraft']
+    logo = espn_data['athlete']['team']['logos'][0]['href']
+    logo_color = espn_data['athlete']['team']['color']
+    jon_data['logo'] = logo
+    jon_data['logo_color'] = "#" + logo_color + "E5"
+
+    jon_data['gameStats'] = stats
+
+
+
+    print(jon_data)
+    # https: // site.web.api.espn.com / apis / common / v3 / sports / football / nfl / athletes / 2330 / gamelog
+
+    return jon_data
+
+
 @app.route('/')
 def root():
     return render_template('index.html')
@@ -28,43 +85,9 @@ def playerComparison():
         player2 = players[1]
         player2 = player2.rsplit(" ")
 
-        # Create url's for Jon's Service
-        service_url1 = "http://35.209.40.140/v1/players/"
-        service_url1 = service_url1 + player1[0] + " " + player1[1]
-        service_url2 = "http://35.209.40.140/v1/players/"
-        service_url2 = service_url2 + player2[0] + " " + player2[1]
-        data1 = requests.get(service_url1)
-        data1 = data1.json()
-        data2 = requests.get(service_url2)
-        data2 = data2.json()
+        data1 = get_player_data(player1)
+        data2 = get_player_data(player2)
 
-        espn_url1 = "https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/"
-        espn_url1 = espn_url1 + data1['espn_id']
-        espn_data1 = requests.get(espn_url1)
-        espn_data1 = espn_data1.json()
-        espn_url2 = "https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/"
-        espn_url2 = espn_url2 + data2['espn_id']
-        espn_data2 = requests.get(espn_url2)
-        espn_data2 = espn_data2.json()
-
-        data1['age'] = espn_data1['athlete']['age']
-        data1['draft'] = espn_data1['athlete']['displayDraft']
-        for item in espn_data1['athlete']['statsSummary']['statistics']:
-            data1[item['name']] = item['value']
-        logo = espn_data1['athlete']['team']['logos'][0]['href']
-        logo_color = espn_data1['athlete']['team']['color']
-        data1['logo'] = logo
-        data1['logo_color'] = "#" + logo_color + "E5"
-
-        data2['age'] = espn_data2['athlete']['age']
-        data2['draft'] = espn_data2['athlete']['displayDraft']
-        for item in espn_data2['athlete']['statsSummary']['statistics']:
-            data2[item['name']] = item['value']
-        logo = espn_data2['athlete']['team']['logos'][0]['href']
-        logo_color = espn_data2['athlete']['team']['color']
-        data2['logo'] = logo
-        data2['logo_color'] = "#" + logo_color + "E5"
-        
         return render_template('comparison.html', player1=data1, player2=data2)
 
     return render_template('index.html')
@@ -75,43 +98,21 @@ def playerStats():
     # POST to get a players stats and display them in their profile
     if request.form['function'] == 'Profile':
 
-        """ USE THIS TO GET DATA LATER: https://stackoverflow.com/questions/65323857/trying-to-scrape-data-from-pro-football-reference"""
-
         # Get player name from form
         player = request.form['player']
         player = player.rsplit(" ")
 
-        # Create url for Jon's Service
-        service_url = "http://35.209.40.140/v1/players/"
-        service_url = service_url + player[0] + " " + player[1]
-        jon_data = requests.get(service_url)
-        jon_data = jon_data.json()
-
-        # Get extra data based on data from Jon's service
-        espn_url = "https://site.web.api.espn.com/apis/common/v3/sports/football/nfl/athletes/"
-        espn_url = espn_url + jon_data['espn_id']
-        espn_data = requests.get(espn_url)
-        espn_data = espn_data.json()
-
-        # Add data to the data already available
-        jon_data['age'] = espn_data['athlete']['age']
-        jon_data['draft'] = espn_data['athlete']['displayDraft']
-        for item in espn_data['athlete']['statsSummary']['statistics']:
-            jon_data[item['name']] = item['value']
-        logo = espn_data['athlete']['team']['logos'][0]['href']
-        logo_color = espn_data['athlete']['team']['color']
-        jon_data['logo'] = logo
-        jon_data['logo_color'] = "#" + logo_color + "E5"
+        data = get_player_data(player)
 
         # load page based on the player's position
-        if jon_data['position'] == 'QB':
-            return render_template('statsQB.html', data=jon_data)
-        elif jon_data['position'] == 'RB':
-            return render_template('statsRB.html', data=jon_data)
-        elif jon_data['position'] == 'WR':
-            return render_template('statsWR.html', data=jon_data)
-        elif jon_data['position'] == 'TE':
-            return render_template('statsTE.html', data=jon_data)
+        if data['position'] == 'QB':
+            return render_template('statsQB.html', data=data)
+        elif data['position'] == 'RB':
+            return render_template('statsRB.html', data=data)
+        elif data['position'] == 'WR':
+            return render_template('statsWR.html', data=data)
+        elif data['position'] == 'TE':
+            return render_template('statsTE.html', data=data)
 
     return render_template('index.html')
 
