@@ -1,22 +1,24 @@
 {% extends "layout.html" %}
 {% block styling %}
     <link rel="stylesheet" href="../static/css/stats.css">
+    <style type="text/css">
+        body {
+           background-image: url("{{data['logo']}}");
+           background-color: {{data['logo_color']}};
+        }
+    </style>
 {% endblock styling %}
 {% block banner %}Football Comparison Tool{% endblock banner %}
 {% block content %} 
 
 <div class="About">
     <div class="text">
-        <h1>THIS IS THE PLAYER PROFILE PAGE</h1>
+        <h1>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h1>
     </div>
 </div>
 
 <div class="picture">
     <img src={{data['headshot_url']}}>
-</div>
-
-<div class="Players">
-    <h2>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h2>
 </div>
 
 <table>
