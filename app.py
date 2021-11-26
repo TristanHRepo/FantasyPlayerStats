@@ -23,7 +23,7 @@ def format_data(data):
 
 
 def get_player_data(player):
-    """ """
+    """Gets the data for a player that is relevant to this application using Jon Baird's api and espn's api"""
 
     # Create url for Jon's Service
     service_url = "http://35.209.40.140/v1/players/"
