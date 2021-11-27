@@ -18,7 +18,6 @@ def format_data(data):
             compiled_data.append(float(game['stats'][stat]))
 
         stats[data['names'][stat]] = compiled_data
-    stats['totals'] = data['seasonTypes'][0]['summary']['stats'][0]['stats']
     return stats
 
 
@@ -42,6 +41,14 @@ def get_player_data(player):
     pgStats = requests.get(espn_url)
     pgStats = pgStats.json()
     stats = format_data(pgStats)
+    jon_data['displayNames'] = pgStats['displayNames']
+    jon_data['abbreviations'] = pgStats['labels']
+    jon_data['totals'] = pgStats['seasonTypes'][0]['summary']['stats'][0]['stats']
+    if jon_data['position'] != 'QB':
+        jon_data['displayNames'].remove('Forced Fumbles')
+        jon_data['displayNames'].remove('Kicks Blocked')
+        jon_data['abbreviations'].remove('FF')
+        jon_data['abbreviations'].remove('KB')
 
     # Add data to the data already available
     jon_data['age'] = espn_data['athlete']['age']
@@ -56,7 +63,6 @@ def get_player_data(player):
 
 
     print(jon_data)
-    # https: // site.web.api.espn.com / apis / common / v3 / sports / football / nfl / athletes / 2330 / gamelog
 
     return jon_data
 
@@ -87,6 +93,9 @@ def playerComparison():
 
         data1 = get_player_data(player1)
         data2 = get_player_data(player2)
+
+        if data1['position'] != data2['position']:
+            return
 
         return render_template('comparison.html', player1=data1, player2=data2)
 

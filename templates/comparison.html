@@ -4,89 +4,78 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
 {% endblock styling %}
 {% block banner %}Football Comparison Tool{% endblock banner %}
-{% block content %} 
-
-<div class="About">
-    <div class="text">
-        <h1> THIS IS THE COMPARISON PAGE </h1>
-    </div>
-</div>
+{% block content %}
 
 <div class="Players">
-    <h2> Compare these players: </h2>
+    <h1> Comparing these players: </h1>
     <h3>Player1: {{player1['full_name']}}</h3>
     <h3>Player2: {{player2['full_name']}}</h3>
 </div>
 
 <div class="Metrics">
-    <button type="button">
-        Yds/gm
-    </button>
+    {% set count = namespace(value=0) %}
+    {% for key, value in player1['gameStats'].items() %}
 
-    <button type="button">
-        TD/gm
-    </button>
+        <button type="button" class="btn btn-success" data-label="{{player1['displayNames'][count.value]}}"
+                    data-p1="{{value}}" data-p2="{{player2['gameStats'][key]}}"
+                onclick="updateChart(this.getAttribute('data-label'), this.getAttribute('data-p1'), this.getAttribute('data-p2'))">
+            {{player1['displayNames'][count.value]}}/GM
+        </button>
 
-    <button type="button">
-        Tar/gm
-    </button>
-
-    <button type="button">
-        Catch/gm
-    </button>
-
-    <button type="button">
-        Snap%/gm
-    </button>
-
-    <button type="button">
-        Broken Tackles/gm
-    </button>
-
-    <button type="button">
-        Contested Catches/gm
-    </button>
-
+        {% set count.value = count.value + 1 %}
+    {% endfor %}
 </div>
 
 <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
 <script>
+const ctx = document.getElementById('myChart').getContext('2d');
 var xValues = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
-
-new Chart("myChart", {
-  type: "line",
-  data: {
-    labels: xValues,
-    datasets: [{
-      label: "{{player1['full_name']}}",
-      data: [1, 2, 0, 1, 1, 0, 0, 3, 1, 1],
-      borderColor: "{{player1['logo_color']}}",
-      fill: false
-    },{
-      label: "{{player2['full_name']}}",
-      data: [0, 0, 1, 1, 2, 1, 2, 1, 0, 0],
-      borderColor: "{{player2['logo_color']}}",
-      fill: false
-    }]
-  },
-  options: {
-    legend: {display: true},
-    scales: {
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'Touch Downs'
+const chart = new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: xValues,
+                datasets: [{
+                  label: "{{player1['full_name']}}",
+                  data: [0],
+                  borderColor: "{{player1['logo_color']}}",
+                  fill: false
+                },{
+                  label: "{{player2['full_name']}}",
+                  data: [0],
+                  borderColor: "{{player2['logo_color']}}",
+                  fill: false
+                }]
+              },
+              options: {
+                legend: {display: true},
+                scales: {
+                    yAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Touch Downs'
+                      }
+                    }],
+                    xAxes: [{
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Game'
+                      }
+                    }]
+              }
           }
-        }],
-        xAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: 'Game'
-          }
-        }]
-  }
+        });
 
-  }
-});
+function updateChart(label, p1, p2) {
+
+    var data1 = JSON.parse(p1);
+    var data2 = JSON.parse(p2);
+
+    chart.options.scales.yAxes[0].scaleLabel.labelString = label
+    chart.data.datasets[0].data = data1;
+    chart.data.datasets[1].data = data2;
+
+    chart.update();
+};
+
 </script>
 {% endblock content %}
