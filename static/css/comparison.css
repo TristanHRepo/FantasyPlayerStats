@@ -1,0 +1,10 @@
+button {
+    border-radius: 5px;
+    background-image: linear-gradient(#d0e9c5, #8e53bf);
+
+    color: white;
+}
+
+* {
+    background-color: #DDEEDD;
+}

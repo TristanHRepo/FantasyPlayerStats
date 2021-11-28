@@ -21,7 +21,8 @@
 
 <div class="Container">
     <div class="Comparison">
-         <form method="post" action="/tools/comparison">
+        <div class="ComparisonBox">
+            <form method="post" action="/tools/comparison">
             <label for="player1">Player:</label>
             <input type="text" id="player1" name="player1" value="Player Name" required><br>
 
@@ -34,17 +35,20 @@
 
              <input type="submit" name="function" value="Compare">
         </form>
+        </div>
     </div>
 
     <div class="Profile">
-         <form method="post" action="/tools/profile">
+        <div class="ProfileBox">
+            <form method="post" action="/tools/profile">
             <label for="player">Get Player Profile:</label>
             <input type="text" id="player" name="player" value="Player Name"><br>
 
             <br>
 
              <input type="submit" name="function" value="Profile">
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
