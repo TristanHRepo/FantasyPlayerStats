@@ -3,81 +3,122 @@
     <link rel="stylesheet" href="../static/css/comparison.css">
     <link rel="stylesheet" href="../static/css/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
+    <style type="text/css">
+        .Player-Container1 {
+            background-color: {{player1['logo_color']}};
+        }
+        .Player-Container2{
+            background-color: {{player2['logo_color']}};
+        }
+    </style>
 {% endblock styling %}
 {% block banner %}Football Comparison Tool{% endblock banner %}
 {% block content %}
 
 <div class="Players">
-    <h1> Comparing these players: </h1>
-    <h3>Player1: {{player1['full_name']}}</h3>
-    <h3>Player2: {{player2['full_name']}}</h3>
+    <div class="Player-Container1">
+        <div class="About">
+            <div class="text">
+                <h1>{{player1['full_name']}}  {{player1['position']}}  {{player1['team']}}</h1>
+            </div>
+            <div class="picture">
+                <img class="logo" src="{{player1['logo']}}">
+            </div>
+        </div>
+
+        <div class="picture">
+            <img class="headshot" src={{player1['headshot_url']}}>
+        </div>
+    </div>
+    <div class="Player-Container2">
+        <div class="About">
+            <div class="text">
+                <h1>{{player2['full_name']}}  {{player2['position']}}  {{player2['team']}}</h1>
+            </div>
+            <div class="picture">
+                <img class="logo" src="{{player2['logo']}}">
+            </div>
+        </div>
+        <div class="picture">
+            <img class="headshot" src={{player2['headshot_url']}}>
+        </div>
+    </div>
 </div>
 
-<div class="Metrics">
-    {% set count = namespace(value=0) %}
-    {% for key, value in player1['gameStats'].items() %}
+<div class="Chart-Container">
 
-        <button type="button" class="btn btn-success" data-label="{{player1['displayNames'][count.value]}}"
-                    data-p1="{{value}}" data-p2="{{player2['gameStats'][key]}}"
-                onclick="updateChart(this.getAttribute('data-label'), this.getAttribute('data-p1'), this.getAttribute('data-p2'))">
-            {{player1['displayNames'][count.value]}}/GM
-        </button>
+    <div class="Metrics">
+        <button class="dropdown_button">metrics</button>
+        <div class="dropdown_items">
+            {% set count = namespace(value=0) %}
+            {% for key, value in player1['gameStats'].items() %}
 
-        {% set count.value = count.value + 1 %}
-    {% endfor %}
+                <button type="button" class="btn btn-success" data-label="{{player1['displayNames'][count.value]}}"
+                            data-p1="{{value}}" data-p2="{{player2['gameStats'][key]}}"
+                        onclick="updateChart(this.getAttribute('data-label'), this.getAttribute('data-p1'), this.getAttribute('data-p2'))">
+                    {{player1['displayNames'][count.value]}}/GM
+                </button>
+
+                {% set count.value = count.value + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="chart">
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+        <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        var xValues = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+        const chart = new Chart(ctx, {
+                      type: "line",
+                      data: {
+                        labels: xValues,
+                        datasets: [{
+                          label: "{{player1['full_name']}}",
+                          data: [0],
+                          borderColor: "{{player1['logo_color']}}",
+                          fill: false
+                        },{
+                          label: "{{player2['full_name']}}",
+                          data: [0],
+                          borderColor: "{{player2['logo_color']}}",
+                          fill: false
+                        }]
+                      },
+                      options: {
+                        legend: {display: true},
+                        scales: {
+                            yAxes: [{
+                              scaleLabel: {
+                                display: true,
+                                labelString: 'Touch Downs'
+                              }
+                            }],
+                            xAxes: [{
+                              scaleLabel: {
+                                display: true,
+                                labelString: 'Game'
+                              }
+                            }]
+                      }
+                  }
+                });
+
+        function updateChart(label, p1, p2) {
+
+            var data1 = JSON.parse(p1);
+            var data2 = JSON.parse(p2);
+
+            chart.options.scales.yAxes[0].scaleLabel.labelString = label
+            chart.data.datasets[0].data = data1;
+            chart.data.datasets[1].data = data2;
+
+            chart.update();
+        };
+
+        </script>
+    </div>
+
 </div>
-
-<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-<script>
-const ctx = document.getElementById('myChart').getContext('2d');
-var xValues = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
-const chart = new Chart(ctx, {
-              type: "line",
-              data: {
-                labels: xValues,
-                datasets: [{
-                  label: "{{player1['full_name']}}",
-                  data: [0],
-                  borderColor: "{{player1['logo_color']}}",
-                  fill: false
-                },{
-                  label: "{{player2['full_name']}}",
-                  data: [0],
-                  borderColor: "{{player2['logo_color']}}",
-                  fill: false
-                }]
-              },
-              options: {
-                legend: {display: true},
-                scales: {
-                    yAxes: [{
-                      scaleLabel: {
-                        display: true,
-                        labelString: 'Touch Downs'
-                      }
-                    }],
-                    xAxes: [{
-                      scaleLabel: {
-                        display: true,
-                        labelString: 'Game'
-                      }
-                    }]
-              }
-          }
-        });
-
-function updateChart(label, p1, p2) {
-
-    var data1 = JSON.parse(p1);
-    var data2 = JSON.parse(p2);
-
-    chart.options.scales.yAxes[0].scaleLabel.labelString = label
-    chart.data.datasets[0].data = data1;
-    chart.data.datasets[1].data = data2;
-
-    chart.update();
-};
-
-</script>
 
 {% endblock content %}
