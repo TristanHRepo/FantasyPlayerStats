@@ -91,3 +91,7 @@
 .Metrics:hover .dropdown_button {
   background-color: rgba(0, 0, 0, 1.0);
 }
+
+.footer {
+    height: 50px;
+}
