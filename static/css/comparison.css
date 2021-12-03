@@ -1,24 +1,24 @@
-.Players {
+.players {
     display: flex;
     justify-content: center;
     color: white;
 }
 
-.Player-Container1{
+.player-container1{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     border: 2px solid black;
 }
 
-.Player-Container2{
+.player-container2{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     border: 2px solid black;
 }
 
-.About{
+.about{
     height: 50px;
     width: 100%;
     display: flex;
@@ -40,7 +40,7 @@
     width: 280px;
 }
 
-.Chart-Container{
+.chart-container{
     display: flex;
     justify-content: space-around;
 }
@@ -54,7 +54,7 @@
   cursor: pointer;
 }
 
-.Metrics {
+.metrics {
   position: relative;
   display: inline-block;
 }
@@ -84,11 +84,11 @@
     background-color: #f1f1f1;
 }
 
-.Metrics:hover .dropdown_items {
+.metrics:hover .dropdown_items {
   display: block;
 }
 
-.Metrics:hover .dropdown_button {
+.metrics:hover .dropdown_button {
   background-color: rgba(0, 0, 0, 1.0);
 }
 

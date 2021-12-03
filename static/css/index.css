@@ -7,7 +7,7 @@ body {
     text-align: center;
 }
 
-.About {
+.about {
     margin: auto;
     width: 60%;
     padding: 10px;
@@ -15,11 +15,11 @@ body {
     font-family: sans-serif;
 }
 
-.About-container{
+.about-container{
     background-color: rgba(0, 70, 255, 0.5);
 }
 
-.Container {
+.container {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
@@ -27,7 +27,7 @@ body {
     background-color: rgba(255, 255, 255, 1.0);
 }
 
-.Comparison {
+.comparison {
     background-color: white;
     border-style: inset;
     border-width: 5px;
@@ -35,11 +35,11 @@ body {
     border-radius: 20px;
 }
 
-.ComparisonBox{
+.comparisonBox{
     margin: 10px;
 }
 
-.Profile {
+.profile {
     background-color: white;
     border-style: solid;
     border-width: 5px;
@@ -47,7 +47,7 @@ body {
     border-radius: 20px
 }
 
-.ProfileBox{
+.profilebox{
     margin: 10px;
 }
 

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="../static/css/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
     <style type="text/css">
-        .Player-Container {
+        .player-container {
            background-color: {{data['logo_color']}};
         }
     </style>
@@ -12,8 +12,8 @@
 {% block banner %}Football Comparison Tool{% endblock banner %}
 {% block content %}
 
-<div class="Player-Container">
-    <div class="About">
+<div class="player-container">
+    <div class="about">
         <div class="text">
             <h1>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h1>
         </div>
@@ -46,9 +46,9 @@
 
 <br>
 
-<div class="Stats-Container">
+<div class="stats-container">
 
-    <div class="Table-Container">
+    <div class="table-container">
     <table>
         <tbody>
                 {% set count = namespace(value=0) %}
@@ -65,7 +65,7 @@
     </table>
 </div>
 
-    <div class="Metrics">
+    <div class="metrics">
         <button class="dropdown_button">metrics</button>
         <div class="dropdown_items">
             {% set count = namespace(value=0) %}

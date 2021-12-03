@@ -1,16 +1,16 @@
-.Player-Container{
+.player-container{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     color: white;
 }
 
-.Stats-Container{
+.stats-container{
     display: flex;
     justify-content: space-between;
 }
 
-.About{
+.about{
     height: 50px;
     width: 100%;
     display: flex;
@@ -71,7 +71,7 @@ table {
   cursor: pointer;
 }
 
-.Metrics {
+.metrics {
   position: relative;
   display: inline-block;
 }
@@ -101,11 +101,11 @@ table {
     background-color: #f1f1f1;
 }
 
-.Metrics:hover .dropdown_items {
+.metrics:hover .dropdown_items {
   display: block;
 }
 
-.Metrics:hover .dropdown_button {
+.metrics:hover .dropdown_button {
   background-color: rgba(0, 0, 0, 1.0);
 }
 
