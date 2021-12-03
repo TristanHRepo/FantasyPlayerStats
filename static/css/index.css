@@ -21,7 +21,6 @@ body {
 
 .container {
     display: flex;
-    flex-wrap: wrap;
     align-content: space-between;
     justify-content: space-around;
     background-color: rgba(255, 255, 255, 1.0);
@@ -29,14 +28,16 @@ body {
 
 .comparison {
     background-color: white;
-    border-style: inset;
+    border-style: solid;
     border-width: 5px;
     border-color: rgba(255, 0, 0, 0.6);
     border-radius: 20px;
+
+    padding: 5px;
 }
 
 .comparisonBox{
-    margin: 10px;
+
 }
 
 .profile {
@@ -74,4 +75,8 @@ input[type=submit] {
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+.footer{
+    height: 20px;
 }
