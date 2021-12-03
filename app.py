@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 
-def format_data(data):
+def format_espn_data(data):
     """Formats all the stats into a format usable for the html/css code"""
 
     stats = {}
@@ -40,7 +40,7 @@ def get_player_data(player):
     espn_url = espn_url + "/gamelog"
     pgStats = requests.get(espn_url)
     pgStats = pgStats.json()
-    stats = format_data(pgStats)
+    stats = format_espn_data(pgStats)
     jon_data['displayNames'] = pgStats['displayNames']
     jon_data['abbreviations'] = pgStats['labels']
     jon_data['totals'] = pgStats['seasonTypes'][0]['summary']['stats'][0]['stats']
@@ -59,8 +59,6 @@ def get_player_data(player):
     jon_data['logo_color'] = "#" + logo_color + "E5"
 
     jon_data['gameStats'] = stats
-
-    print(jon_data)
 
     return jon_data
 
@@ -84,16 +82,11 @@ def playerComparison():
             data[player] = []
 
         # Get players names
-        player1 = players[0]
-        player1 = player1.rsplit(" ")
-        player2 = players[1]
-        player2 = player2.rsplit(" ")
+        player1 = players[0].rsplit(" ")
+        player2 = players[1].rsplit(" ")
 
         data1 = get_player_data(player1)
         data2 = get_player_data(player2)
-
-        if data1['position'] != data2['position']:
-            return
 
         return render_template('comparison.html', player1=data1, player2=data2)
 
@@ -115,6 +108,7 @@ def playerStats():
         return render_template('stats.html', data=data)
 
     return render_template('index.html')
+
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 7777))
