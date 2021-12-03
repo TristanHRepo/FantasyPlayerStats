@@ -60,8 +60,6 @@ def get_player_data(player):
 
     jon_data['gameStats'] = stats
 
-
-
     print(jon_data)
 
     return jon_data
@@ -114,14 +112,7 @@ def playerStats():
         data = get_player_data(player)
 
         # load page based on the player's position
-        if data['position'] == 'QB':
-            return render_template('statsQB.html', data=data)
-        elif data['position'] == 'RB':
-            return render_template('statsRB.html', data=data)
-        elif data['position'] == 'WR':
-            return render_template('statsWR.html', data=data)
-        elif data['position'] == 'TE':
-            return render_template('statsTE.html', data=data)
+        return render_template('stats.html', data=data)
 
     return render_template('index.html')
 

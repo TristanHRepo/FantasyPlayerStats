@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .text {
     text-align: center;
 }
@@ -10,18 +15,24 @@
     font-family: sans-serif;
 }
 
+.About-container{
+    background-color: rgba(0, 70, 255, 0.8);
+}
+
 .Container {
     display: flex;
     flex-wrap: wrap;
     align-content: space-between;
     justify-content: space-around;
+    background-color: rgba(255, 255, 255, 1.0);
 }
 
 .Comparison {
+    background-color: white;
     border-style: inset;
     border-width: 5px;
-    border-color: #ff000066;
-    border-radius: 20px
+    border-color: rgba(255, 0, 0, 0.6);
+    border-radius: 20px;
 }
 
 .ComparisonBox{
@@ -29,9 +40,10 @@
 }
 
 .Profile {
+    background-color: white;
     border-style: solid;
     border-width: 5px;
-    border-color: #0000ff66;
+    border-color: rgba(0, 10, 255, 1.0);
     border-radius: 20px
 }
 
@@ -39,6 +51,27 @@
     margin: 10px;
 }
 
-input {
-    width: 90%;
+input[type=text] {
+  width: 100%;
+  padding: 8px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+}
+
+input[type=text]:focus {
+  border: 3px solid #555;
+}
+
+input[type=submit] {
+    background-color: rgba(0, 0, 255, 0.6);
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
 }

@@ -1,13 +1,56 @@
+.Player-Container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.About{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.logo {
+    height: 50px;
+}
+
+.text{
+    height: 50px;
+    text-align: center;
+}
+
+.headshot {
+    height: 200px;
+    width: 280px;
+}
+
 table, th, td {
-  border: 1px solid black;
+    border: 1px solid black;
+}
+
+th {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
 }
 
 table {
-  border-collapse: collapse;
+    border-collapse: collapse;
+    margin: auto;
 }
 
-img {
-  height: 200px;
-  width: 280px;
+.personal-stats{
+    width: 100%;
+
 }
+
+.personal-stats th{
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.personal-stats td{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 

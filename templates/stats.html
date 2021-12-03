@@ -1,76 +1,64 @@
 {% extends "layout.html" %}
 {% block styling %}
     <link rel="stylesheet" href="../static/css/stats.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <style type="text/css">
+        .Player-Container {
+           background-color: {{data['logo_color']}};
+        }
+    </style>
 {% endblock styling %}
 {% block banner %}Football Comparison Tool{% endblock banner %}
-{% block content %} 
+{% block content %}
 
-<div class="About">
-    <div class="text">
-        <h1>THIS IS THE PLAYER PROFILE PAGE</h1>
+<div class="Player-Container">
+    <div class="About">
+        <div class="text">
+            <h1>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h1>
+        </div>
+        <div class="picture">
+            <img class="logo" src="{{data['logo']}}">
+        </div>
+    </div>
+
+    <div class="picture">
+        <img class="headshot" src={{data['headshot_url']}}>
     </div>
 </div>
 
-<div class="picture">
-    <img src={{data['headshot_url']}}>
-</div>
-
-<div class="Players">
-    <h2>{{data['full_name']}}  {{data['position']}}  {{data['team']}}</h2>
-</div>
-
-<table>
+<table class="personal-stats">
     <tbody>
-            <tr>
-                <th>Age:</th>
-                <td>{{data['age']}}</td>
-                <th>Height:</th>
-                <td>{{data['height']}}</td>
-                <th>Weight:</th>
-                <td>{{data['weight']}}</td>
-            </tr>
-            <tr>
-                <th>College:</th>
-                <td>{{data['college']}}</td>
-                <th>Draft Pick:</th>
-                <td>{{data['draft']}}</td>
-                <th>Year:</th>
-                <td>{{data['years_exp']}}</td>
-            </tr>
-
-            <tr>
-                <td>Passing Yards</td>
-                <th>Player:</th>
-                <td>{{data['passingYards']}}</td>
-                <th>Average:</th>
-                <td>{{data[10]}}</td>
-                <td>{{data[11]}}</td>
-            </tr>
-            <tr>
-                <td>Passing TD's</td>
-                <th>Player:</th>
-                <td>{{data['passingTouchdowns']}}</td>
-                <th>Average:</th>
-                <td>{{data[13]}}</td>
-                <td>{{data[14]}}</td>
-            </tr>
-            <tr>
-                <td>Interceptions</td>
-                <th>Player:</th>
-                <td>{{data['interceptions']}}</td>
-                <th>Average:</th>
-                <td>{{data[16]}}</td>
-                <td>{{data[17]}}</td>
-            </tr>
-            <tr>
-                <td>QB Rating</td>
-                <th>Player:</th>
-                <td>{{data['adjQBR']}}</td>
-                <th>Average:</th>
-                <td>{{data[19]}}</td>
-                <td>{{data[20]}}</td>
-            </tr>
+        <th>Age:</th>
+        <td>{{data['age']}}</td>
+        <th>Height:</th>
+        <td>{{data['height']}}</td>
+        <th>Weight:</th>
+        <td>{{data['weight']}}</td>
+        <th>College:</th>
+        <td>{{data['college']}}</td>
+        <th>Draft Pick:</th>
+        <td>{{data['draft']}}</td>
+        <th>Year:</th>
+        <td>{{data['years_exp']}}</td>
     </tbody>
 </table>
 
+<br>
+
+<div class="Table-Container">
+    <table>
+        <tbody>
+                {% set count = namespace(value=0) %}
+                {% for item in data['displayNames'] %}
+
+                    <tr>
+                        <th>{{item}}:</th>
+                        <td>{{data['totals'][count.value]}}</td>
+                    </tr>
+
+                    {% set count.value = count.value + 1 %}
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock content %}
